@@ -8,6 +8,8 @@
 #define DMLC_DATA_H_
 
 #include <string>
+#include <sstream>
+#include <iostream>
 #include <vector>
 #include <map>
 #include "./base.h"
@@ -145,6 +147,23 @@ class Row {
       }
     }
     return sum;
+  }
+
+  /*!
+   * \brief row to string
+   */
+  std::string to_string() const {
+    std::ostringstream ostr;
+    ostr << label;
+    ostr << ' ' << weight;
+    for (size_t i = 0; i < length; i++) {
+      if (field != NULL) {
+        ostr << ' ' << get_field(i) << ':' << get_index(i) << ':' << get_value(i);
+      } else {
+        ostr << ' ' << get_index(i) << ':' << get_value(i);
+      }
+    }
+    return ostr.str();
   }
 };
 
